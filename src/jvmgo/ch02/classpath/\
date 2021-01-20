@@ -1,0 +1,31 @@
+package classpath
+
+import (
+	"io/ioutil"
+	"path/filepath"
+)
+
+// 定义 DirEntry 类型
+type DirEntry struct {
+	absDir string // 绝对路径
+}
+
+// 创建 DirEntry
+func newDirEntry(path string) *DirEntry {
+	absDir, err := filepath.Abs(path) // 参数 path 转成绝对路径
+	if err != nil {
+		return panic(err) // 如转换出现错误，调用 panic() 函数终止程序
+	}
+	return &DirEntry{absDir}
+}
+
+// 调用形式：DirEntry{}.readClass()
+func (self *DirEntry) readClass(className string) ([]byte, DirEntry, error) {
+	fileName := filepath.Join(self.absDir, className) // 获取 class 文件的完整路径
+	date, err := ioutil.ReadFile(fileName) // 使用 ioutil 包的 ReadFile() 函数读取 class 文件
+	return data, self, err
+}
+
+func (self *DirEntry) String() string {
+	return self.absDir // 简单返回 class 绝对路径作为 DirEntry 变量的描述
+}
